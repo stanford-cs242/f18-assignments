@@ -6,7 +6,7 @@ exception Unimplemented
 
 (* You need to implement the statics for the three remaining cases below,
  * Var, Lam, and App. We have provided you with an implementation for Int
- * and Binop that you may refer to. *)
+ * and Binop that you may refer to.*)
 let rec typecheck_term (env : Type.t String.Map.t) (e : Expr.t) : (Type.t, string) Result.t =
   match e with
   | Expr.Int _ -> Ok Type.Int
@@ -21,6 +21,10 @@ let rec typecheck_term (env : Type.t String.Map.t) (e : Expr.t) : (Type.t, strin
   | Expr.Var x -> raise Unimplemented
   | Expr.Lam(x, arg_tau, e') -> raise Unimplemented
   | Expr.App (fn, arg) -> raise Unimplemented
+  | Expr.Pair (e1, e2) -> raise Unimplemented
+  | Expr.Project (e, d) -> raise Unimplemented
+  | Expr.Inject (e, d, tau) -> raise Unimplemented
+  | Expr.Case (e, (x1, e1), (x2, e2)) -> raise Unimplemented
 
 let typecheck t = typecheck_term String.Map.empty t
 

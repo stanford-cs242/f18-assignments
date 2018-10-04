@@ -33,7 +33,7 @@ module Expr = struct
   [@@deriving sexp_of, sexp, compare]
 
   (* substitute has the following mapping to the logic discussed in lecture:
-   * substitute x t' t = [x -> t'] t
+   * substitute x e' e = [x -> e'] e
    *
    * You will need to implement substitution by defining a case for each
    * possible form of a term. For each line, delete the raise and add your
@@ -45,6 +45,10 @@ module Expr = struct
     | Binop (b, t1, t2) -> raise Unimplemented
     | Lam (x', tau, body) -> raise Unimplemented
     | App (t1, t2) -> raise Unimplemented
+    | Pair (e1, e2) -> raise Unimplemented
+    | Project (e, d) -> raise Unimplemented
+    | Inject (e, d, tau) -> raise Unimplemented
+    | Case (e, (x1, e1), (x2, e2)) -> raise Unimplemented
 
   let inline_tests () =
     let t1 = App(Lam("x", Type.Int, Var "x"), Var "y") in

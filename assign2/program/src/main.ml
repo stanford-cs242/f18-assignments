@@ -25,7 +25,6 @@ let run fileopt =
     | Error s -> Printf.printf "Error: %s\n" s)
   | None -> ()
 
-
 let main () =
   let open Command.Let_syntax in
   Command.basic

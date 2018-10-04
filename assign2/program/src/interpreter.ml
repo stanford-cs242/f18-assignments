@@ -8,14 +8,19 @@ type outcome =
 exception RuntimeError of string
 exception Unimplemented
 
-(* You will implement the App and Binop cases below. See the dynamics section
-   for a specification on how the small step semantics should work. *)
+(* You will implement the App, Binop, Pair, Project, Inject, and Case cases
+   below. See the dynamics section for a specification on how the small step
+   semantics should work. *)
 let rec trystep e =
   match e with
   | Expr.Var _ -> raise (RuntimeError "Unreachable")
   | (Expr.Lam _ | Expr.Int _) -> Val
   | Expr.App (fn, arg) -> raise Unimplemented
   | Expr.Binop (binop, left, right) -> raise Unimplemented
+  | Expr.Pair (e1, e2) -> raise Unimplemented
+  | Expr.Project (e, dir) -> raise Unimplemented
+  | Expr.Inject (e, dir, tau) -> raise Unimplemented
+  | Expr.Case (e, (x1, e1), (x2, e2)) -> raise Unimplemented
 
 let rec eval e =
   match trystep e with
