@@ -1,0 +1,1 @@
+fn (sup: int -> int -> int) . 3

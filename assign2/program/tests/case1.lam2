@@ -1,0 +1,1 @@
+case (inj 1 = R as int+int) {L(x) => 1 | R(y) => 9}

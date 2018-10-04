@@ -1,0 +1,1 @@
+(fn (f: int -> int -> int) . f 3) (fn (x: int) . x * x)

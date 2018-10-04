@@ -1,0 +1,1 @@
+(fn (y : int*int*int) . ((fn (x : int) . x))) ((5, 3), 4) 9
