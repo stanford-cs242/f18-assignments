@@ -6,8 +6,7 @@ exception Unimplemented
 
 (* You need to implement the statics for the three remaining cases below,
  * Var, Lam, and App. We have provided you with an implementation for Int
- * and Binop that you may refer to. See code_examples.ml for more info
- * on the >>= operator. *)
+ * and Binop that you may refer to. *)
 let rec typecheck_term (env : Type.t String.Map.t) (e : Expr.t) : (Type.t, string) Result.t =
   match e with
   | Expr.Int _ -> Ok Type.Int
