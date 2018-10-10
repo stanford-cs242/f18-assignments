@@ -1,0 +1,20 @@
+\documentclass[11pt]{article}
+
+\input{./defs.tex}
+
+\begin{document}
+
+\hwtitle
+  {Assignment 3}
+  {Will Crichton (wcrichto)} %% REPLACE THIS WITH YOUR NAME/ID
+
+\problem{Problem 3}
+
+Your answer goes here. Here's a few examples of complex types and expressions.
+
+\begin{align*}
+\msf{list} &= \tpoly{\alpha}{\trec{\beta}{\tsum{\tunit}{(\tprod{\alpha}{\beta})}}} \\
+\msf{nil} &= \poly{\alpha}{\fold{(\inj{()}{L}{\tsum{\tunit}{(\tprod{\alpha}{\beta})}})}{\trec{\beta}{\tsum{\tunit}{(\tprod{\alpha}{\beta})}}}} \\
+\end{align*}
+
+\end{document}
