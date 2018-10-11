@@ -17,34 +17,22 @@ module MyStream : Stream2 = struct
   type 'a stream = Stream of (unit -> 'a * 'a stream)
 
   let head (Stream f) =
-    (* BEGIN STARTER *)
     raise Unimplemented
-    (* END STARTER *)
 
   let tail (Stream f) =
-    (* BEGIN STARTER *)
     raise Unimplemented
-    (* END STARTER *)
 
   let rec take s n =
-    (* BEGIN STARTER *)
     raise Unimplemented
-    (* END STARTER *)
 
   let rec zip (Stream a) (Stream b) =
-    (* BEGIN STARTER *)
     raise Unimplemented
-    (* END STARTER *)
 
   let enumerate s =
-    (* BEGIN STARTER *)
     raise Unimplemented
-    (* END STARTER *)
 
   let rec windows s n =
-    (* BEGIN STARTER *)
     raise Unimplemented
-    (* END STARTER *)
 end
 
 module StreamTests(S : Stream2) = struct
@@ -75,9 +63,7 @@ module StreamTests(S : Stream2) = struct
   ;;
   
   let rec upfrom (n : int) : int stream =
-    (* BEGIN STARTER *)
     raise Unimplemented
-    (* END STARTER *)
   ;;
 
   let s = upfrom 5 in
@@ -95,9 +81,7 @@ module StreamTests(S : Stream2) = struct
   ;;
 
   let fib () : int stream =
-    (* BEGIN STARTER *)
     raise Unimplemented
-    (* END STARTER *)
   ;;
 
   let s = fib () in

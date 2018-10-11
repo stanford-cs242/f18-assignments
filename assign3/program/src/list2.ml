@@ -17,34 +17,22 @@ module MyList : List2 = struct
   type 'a list = Cons of 'a * 'a list | Nil
 
   let rec foldr f base l =
-    (* BEGIN STARTER *)
     raise Unimplemented
-    (* END STARTER *)
 
   let to_string f l =
-    (* BEGIN STARTER *)
     raise Unimplemented
-    (* END STARTER *)
 
   let map f l =
-    (* BEGIN STARTER *)
     raise Unimplemented
-    (* END STARTER *)
 
   let rec filter f l =
-    (* BEGIN STARTER *)
     raise Unimplemented
-    (* END STARTER *)
 
   let reduce f l =
-    (* BEGIN STARTER *)
     raise Unimplemented
-    (* END STARTER *)
 
   let combine_keys l =
-    (* BEGIN STARTER *)
     raise Unimplemented
-    (* END STARTER *)
 end
 
 module ListTests(L : List2) = struct
