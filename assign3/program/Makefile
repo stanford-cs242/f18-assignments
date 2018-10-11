@@ -1,7 +1,7 @@
 all: stream2.native list2.native
 
 BUILD = corebuild
-FLAGS = -package ounit -use-ocamlfind -use-menhir 
+FLAGS = -use-ocamlfind -use-menhir 
 
 %.native: always
 	$(BUILD) $(FLAGS) src/$@
