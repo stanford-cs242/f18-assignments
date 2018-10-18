@@ -1,0 +1,27 @@
+\documentclass[11pt]{article}
+
+\input{defs.tex}
+
+\begin{document}
+
+\hwtitle
+  {Assignment 4}
+  {Will Crichton (wcrichto)} %% REPLACE THIS WITH YOUR NAME/ID
+
+\problem{Problem 3}
+
+\begin{mathpar}
+\ir{D-Raise}
+  {\ }
+  {\wsteps{\wcs~n;~\wci~\wraise}{\wci~\wraising{n}}}
+
+\ir{D-Label-Raising}
+  {\ }
+  {\wsteps
+    {\wci~\wlabel{\_}{(\semi{\_}{\wraising{n}})}}
+    {\wci~\wraising{n}}}
+
+
+\end{mathpar}
+
+\end{document}
