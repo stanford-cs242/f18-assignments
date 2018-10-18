@@ -105,7 +105,7 @@ module.exports = function getTests(runTest) {
       }),
     () =>
       runTest(
-        "heap segmentation edge case",
+        "heap segmentation",
         ({ mem, alloc_init, alloc, free }) => {
           alloc_init();
           let ptr = alloc(1024);
@@ -198,17 +198,6 @@ module.exports = function getTests(runTest) {
           traverseHeap(mem),
           [{ ptr: 8, size: 65528, free: 0 }],
           "Unexpected Heap structure."
-        );
-      }),
-
-    () =>
-      runTest("fill page", ({ mem, alloc_init, alloc, free }) => {
-        alloc_init();
-        let ptr = alloc(PAGE_SIZE - 8);
-        assert.equal(
-          mem.buffer.byteLength,
-          PAGE_SIZE,
-          "Memory should be one page."
         );
       }),
     () =>
