@@ -18,12 +18,12 @@ module.exports = function getTests(runTest) {
     let buffer = mem.buffer;
     let heap = [];
     let start = 0;
+    let view = new DataView(buffer);
     while (start < buffer.byteLength) {
-      let words = new Int32Array(buffer, start);
-      let size = words[0];
+      let size = view.getInt32(start, true);
       assert.isAtLeast(size, 0, "Malformed heap - invalid size.");
 
-      let free = words[1];
+      let free = view.getInt32(start + 4, true);
       assert(free == 0 || free == 1, "free flag is either 0 or 1.");
 
       heap.push({ ptr: start + 8, size, free });
@@ -181,6 +181,17 @@ module.exports = function getTests(runTest) {
           );
         }
       ),
+    () =>
+      runTest("unaligned alloc()", ({ mem, alloc_init, alloc }) => {
+        alloc_init();
+        let ptr = alloc(999);
+
+        assert.deepEqual(
+          traverseHeap(mem),
+          [{ ptr: 8, size: 999, free: 0 }, { ptr: 1015, size: 64521, free: 1 }],
+          "Unexpected Heap structure."
+        );
+      }),
     () =>
       runTest("alloc too large", ({ mem, alloc_init, alloc, free }) => {
         alloc_init();
