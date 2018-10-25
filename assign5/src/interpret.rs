@@ -2,6 +2,31 @@ extern crate memory;
 
 use ast::*;
 
+#[allow(unused_macros)]
+macro_rules! fmt_state {
+  ($x:ident) => (
+    format!("{}: {:?}", stringify!($x), $x)
+  );
+  ($x:ident, $($y:ident),*) => (
+    format!("{} | {}", fmt_state!($x), fmt_state!($($y),*))
+  );
+  ($x:expr) => {{
+    let s: String = format!("{:?}", $x).chars().collect();
+    let v = &s[8..s.len()-2];
+    let mut r = format!("memory: [");
+    let mut i = 0;
+    for _c in v.chars() {
+      if _c == ',' || _c == ' ' {
+        continue;
+      } else if _c != '0' {
+        r = format!("{} {}@{} ", r, _c, i);
+      }
+      i += 1;
+    }
+    format!("{}]", r)
+  }}
+}
+
 // Print elements of config state, i.e. stack, locals, instrs
 // Usage ex.:
 //    print_config!(stack);
@@ -102,30 +127,4 @@ pub fn interpret(mut module: WModule) -> Result<i32, String> {
   }
 
   Ok(config.stack.pop().unwrap())
-}
-
-
-#[allow(unused_macros)]
-macro_rules! fmt_state {
-  ($x:ident) => (
-    format!("{}: {:?}", stringify!($x), $x)
-  );
-  ($x:ident, $($y:ident),*) => (
-    format!("{} | {}", fmt_state!($x), fmt_state!($($y),*))
-  );
-  ($x:expr) => {{
-    let s: String = format!("{:?}", $x).chars().collect();
-    let v = &s[8..s.len()-2];
-    let mut r = format!("memory: [");
-    let mut i = 0;
-    for _c in v.chars() {
-      if _c == ',' || _c == ' ' {
-        continue;
-      } else if _c != '0' {
-        r = format!("{} {}@{} ", r, _c, i);
-      }
-      i += 1;
-    }
-    format!("{}]", r)
-  }}
 }
