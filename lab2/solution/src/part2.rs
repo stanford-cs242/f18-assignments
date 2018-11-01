@@ -17,30 +17,16 @@ impl Event {
   }
 
   /* This function checks if two events are one the same date */
-  /* BEGIN SOLUTION */
   pub fn has_conflict(&self, other: &Event) -> bool {
     self.month == other.month && self.day == other.day && self.year == other.year
   }
-  /* END SOLUTION */
-  /* BEGIN STARTER
-  pub fn has_conflict() {
-    // Your code!
-  }
-  END STARTER */
 
   /* This function shifts the date of an event by one day.
    * You can assume that the date is not on the last day
    * of a month */
-  /* BEGIN SOLUTION */
   pub fn update_event(&mut self) {
     self.day += 1;
   }
-  /* END SOLUTION */
-  /* BEGIN STARTER
-  pub fn update_event() {
-    // Your code!
-  }
-  END STARTER */
 }
 
 #[derive(Debug, Clone, Eq, PartialEq)]
@@ -63,7 +49,6 @@ impl Trie {
   }
 
   fn build(strs: &Vec<&str>, chr: char) -> Trie {
-    /* BEGIN SOLUTION */
     let fc = strs.iter().filter_map(|s| s.chars().next())
       .collect::<HashSet<_>>();
     Trie {
@@ -78,14 +63,9 @@ impl Trie {
                   else { "" }).collect::<Vec<_>>(), c)
         }).collect::<Vec<_>>()
     }
-    /* END SOLUTION */
-    /* BEGIN STARTER
-    unimplemented!()
-    END STARTER */
   }
 
   pub fn contains(&self, s: &str) -> bool {
-    /* BEGIN SOLUTION */
     if s.len() == 0 { return self.has; }
     let chr = s.chars().next().unwrap();
     for child in self.children.iter() {
@@ -94,10 +74,6 @@ impl Trie {
       }
     }
     return false;
-    /* END SOLUTION */
-    /* BEGIN STARTER
-    unimplemented!()
-    END STARTER */
   }
 }
 

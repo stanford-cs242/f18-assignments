@@ -7,7 +7,6 @@ fn password_checker(s: String) {
     if let Err(_) = io::stdin().read_line(&mut buffer) { return; }
     if buffer.len() == 0 { return; }
 
-    /* BEGIN SOLUTION */
     if &buffer[0..(buffer.len()-1)] == &s {
       println!("You guessed it!");
       return;
@@ -15,33 +14,17 @@ fn password_checker(s: String) {
       println!("Guesses: {}", guesses + 1);
       guesses += 1;
     }
-    /* END SOLUTION */
-    /* BEGIN STARTER
-    // If the buffer is "Password1" then print "You guessed it!" and return,
-    // otherwise print the number of guesses so far.
-    unimplemented!()
-    END STARTER */
   }
 }
 
 fn add_n(v: Vec<i32>, n: i32) -> Vec<i32> {
-  /* BEGIN SOLUTION */
   v.into_iter().map(|x| x + n).collect()
-  /* END SOLUTION */
-  /* BEGIN STARTER
-  unimplemented!()
-  END STARTER */
 }
 
 fn add_n_inplace(v: &mut Vec<i32>, n: i32) {
-  /* BEGIN SOLUTION */
   for x in v.iter_mut() {
     *x = *x + n;
   }
-  /* END SOLUTION */
-  /* BEGIN STARTER
-  unimplemented!()
-  END STARTER */
 }
 
 fn reverse_clone<T: Clone>(v: &mut Vec<T>) {
@@ -54,17 +37,11 @@ fn reverse_clone<T: Clone>(v: &mut Vec<T>) {
 }
 
 fn reverse<T>(v: &mut Vec<T>) {
-  /* BEGIN SOLUTION */
   let n = v.len();
   for i in 0..n/2 {
-    /* BEGIN SOLUTION */
     unsafe {
       ptr::swap(&mut v[i] as *mut T, &mut v[n-i-1] as *mut T);
     }
-    /* END SOLUTION */
-    /* BEGIN STARTER
-    unimplemented!()
-    END STARTER */
   }
 }
 
