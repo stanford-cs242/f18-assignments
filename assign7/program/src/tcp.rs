@@ -38,33 +38,34 @@ mod test {
   use std::sync::mpsc::channel;
   use std::thread;
 
-  #[test]
-  fn test_basic() {
+  fn gen_bufs() -> Vec<Buffer> {
     let mut bufs: Vec<Buffer> = Vec::new();
     let mut rng = rand::thread_rng();
-    for i in 0usize..20 {
+    for _ in 0usize..20 {
       let buf: Buffer = vec![0; rng.gen_range(1, 10)];
       let buf: Buffer = buf.into_iter().map(|x: u8| rng.gen()).collect();
       bufs.push(buf);
     }
-
-    let (s, c): ((Chan<(), TCPServer>), (Chan<(), TCPClient>)) = Chan::new();
-    let thread = thread::spawn(move || { tcp_client(c, bufs); });
-
-    tcp_server(s);
-
-    let res = thread.join();
+    bufs
   }
 
   #[test]
-  fn test_noisy() {
-    let mut bufs: Vec<Buffer> = Vec::new();
-    let mut rng = rand::thread_rng();
-    for i in 0usize..20 {
-      let buf: Buffer = vec![0; rng.gen_range(1, 10)];
-      let buf: Buffer = buf.into_iter().map(|x: u8| rng.gen()).collect();
-      bufs.push(buf);
-    }
+  fn test_basic() {
+    let bufs = gen_bufs();
+    let bufs_copy = bufs.clone();
+    let (s, c): ((Chan<(), TCPServer>), (Chan<(), TCPClient>)) = Chan::new();
+    let thread = thread::spawn(move || { tcp_client(c, bufs); });
+
+    let recvd = tcp_server(s);
+    let res = thread.join();
+
+    assert_eq!(recvd, bufs_copy);
+  }
+
+  #[test]
+  fn test_lossy() {
+    let bufs = gen_bufs();
+    let bufs_copy = bufs.clone();
 
     NOISY.with(|noisy| {
       noisy.store(true, Ordering::SeqCst);
@@ -73,8 +74,9 @@ mod test {
     let (s, c): ((Chan<(), TCPServer>), (Chan<(), TCPClient>)) = Chan::new();
     let thread = thread::spawn(move || { tcp_client(c, bufs); });
 
-    tcp_server(s);
-
+    let recvd = tcp_server(s);
     let res = thread.join();
+
+    assert_eq!(recvd, bufs_copy);
   }
 }
