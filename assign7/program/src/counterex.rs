@@ -19,3 +19,21 @@ pub fn bug2() {
 pub fn bug3() {
   unimplemented!()
 }
+
+#[cfg(test)]
+mod tests {
+  #[test]
+  fn bug1() {
+    super::bug1();
+  }
+
+  #[test]
+  fn bug2() {
+    super::bug2();
+  }
+
+  #[test]
+  fn bug3() {
+    super::bug3();
+  }
+}
