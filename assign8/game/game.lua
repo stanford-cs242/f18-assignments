@@ -36,7 +36,7 @@ local Game = class.class({class.Object}, function(Class)
           local tile = ({tiles.GroundTile, tiles.WallTile, tiles.DoorTile})[val+1]
           if self.tiles[x] == nil then self.tiles[x] = {} end
           self.tiles[x][y] = tile:new()
-          if types.isinstance(self.tiles[x][y], tiles.GroundTile) then
+          if tiles.GroundTile:is(self.tiles[x][y]) then
             table.insert(self.floors, Point:new(x,y))
           end
         end, false)
@@ -86,7 +86,7 @@ local Game = class.class({class.Object}, function(Class)
       local dst = pos + vector
 
       -- Collision detection with walls
-      if tiles.WallTile:isinstance(self.tiles[dst:x()][dst:y()]) then
+      if tiles.WallTile:is(self.tiles[dst:x()][dst:y()]) then
         return
       end
 
@@ -138,7 +138,7 @@ local Game = class.class({class.Object}, function(Class)
     function Class:monsters()
       local monsters = {}
       for _, e in ipairs(self.entities) do
-        if types.isinstance(e, Monster) then
+        if Monster:is(e) then
           table.insert(monsters, e)
         end
       end
@@ -277,7 +277,7 @@ local Game = class.class({class.Object}, function(Class)
         end
 
         for _, e in ipairs(self.entities) do
-          if not types.isinstance(e, Light) then
+          if not Light:is(e) then
             local p = e:pos()
             termfx.setcell(p:x()+1, p:y()+1, e:char(), e:color(), termfx.grey2color(8))
           end
@@ -300,7 +300,7 @@ local Game = class.class({class.Object}, function(Class)
 
         -- Draw entities
         for _, e in ipairs(self.entities) do
-          if not types.isinstance(e, Light) and self._hero:can_see(e) then
+          if not Light:is(e) and self._hero:can_see(e) then
             local pos = e:pos()
             local c = e:compute_lighting(intensities[pos:x()][pos:y()])
             if c ~= termfx.rgb2color(0,0,0) then

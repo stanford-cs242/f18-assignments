@@ -9,13 +9,15 @@ Object = {
 
   constructor = function() end,
 
-  isinstance = function(_, v)
-    return v:type() == Object
+  is = function(class, val)
+    -- TODO: fill in this function
   end,
 
-  type = function(self) return self end,
+  type = function(_) return Object end,
 
-  datatypes = {}
+  datatypes = {},
+
+  bases = {}
 }
 
 local function class(bases, methods, datatypes)

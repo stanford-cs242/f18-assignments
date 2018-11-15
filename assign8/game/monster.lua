@@ -20,7 +20,7 @@ local Monster = class.class({Entity}, function(Class)
     function Class:color() return termfx.color.RED end
 
     function Class:collide(e)
-      if Hero:isinstance(e) then
+      if Hero:is(e) then
         self.game:log("A monster hits you for 2 damage.")
         e:set_health(e:health() - 2)
       end

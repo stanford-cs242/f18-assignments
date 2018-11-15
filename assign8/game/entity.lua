@@ -42,7 +42,7 @@ local Entity = class.class({class.Object}, function(Class)
       local dst = e:pos()
       local dj = ROT.Path.Dijkstra(
         dst:x(), dst:y(), function(x, y)
-          return not self.game.tiles[x][y]:isinstance(tiles.WallTile)
+          return not tiles.WallTile:is(self.game.tiles[x][y])
       end)
 
       local path = {}
@@ -67,7 +67,7 @@ local Entity = class.class({class.Object}, function(Class)
           if x < 1 or x > #self.game.tiles or
             y < 1 or y > #self.game.tiles[1]
           then return false end
-          return types.isinstance(self.game.tiles[x][y], tiles.GroundTile)
+          return tiles.GroundTile:is(self.game.tiles[x][y])
       end)
 
       local visible = {}
