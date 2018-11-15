@@ -12,7 +12,17 @@ local Monster = class.class({Entity}, function(Class)
     end
 
     function Class:logic()
-      -- Your code here.
+      local hero = self.game:hero()
+      while true do
+        if self:can_see(hero) then
+          -- Your code here.
+        else
+          -- Idle
+          local rand_vec = Point:new(_G.game_random:random(3) - 2, _G.game_random:random(3) - 2)
+          self.game:try_move(self, rand_vec)
+          coroutine.yield()
+        end
+      end
     end
 
     function Class:char() return "%" end
