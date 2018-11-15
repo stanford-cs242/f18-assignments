@@ -4,6 +4,7 @@ local Object
 Object = {
   new = function()
     local inst = {}
+    inst.type = Object.type
     return inst
   end,
 
