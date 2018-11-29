@@ -1,6 +1,5 @@
 import time
 import re
-import http.cookiejar as clib
 import getpass
 
 import requests
@@ -82,31 +81,42 @@ if __name__ == '__main__':
 
 
     grades = [0] * 8
-    ld_remaining = 5
+    ld_used = [0] * 8
 
+    a8_graded = True
     for row in assignments.find_all('tr', role='row')[1:]:
         aname = row.find('th', class_='table--primaryLink').text
 
+        if 'Final' in aname: continue
+
         submission = row.find(class_='submissionStatus').find_all('div')
+        latedays = 0
         if len(submission) == 2 and 'No Submission' in submission[1]:
             score = 0
-            latedays = 0
+        elif len(submission) == 2:
+            a8_graded = False
+            score = 90
         else:
             score = proc_score(submission[0].text)
             latedays = proc_late(submission[1].text) if len(submission) > 1 else 0
 
         anum = int(re.search(r'\d+', aname).group(0))
 
-        ld_remaining -= latedays
-        if ld_remaining > 0:
-            grades[anum - 1] += score * weights[aname]
-        else:
-            capped = min(score, 100 + 10 * ld_remaining)
-            grades[anum - 1] += capped * weights[aname]
+        grades[anum - 1] += score * weights[aname]
+        ld_used[anum - 1] = max(ld_used[anum-1], latedays)
+
+    # handle latedays
+    ld_remaining = 5
+    for i, ld in enumerate(ld_used):
+        ld_remaining -= ld
+        if ld_remaining < 0:
+            grades[i] = min(grades[i], 100 + 10 * ld_remaining)
 
 
     for i, g in enumerate(grades):
-        print('Grade for Assignment %d: %.2f' % (i, g))
+        print('Grade for Assignment %d: %.2f' % (i+1, g))
+    if not a8_graded:
+        print('**You\'ve submitted Assignment 8 but grades are not yet released; the score of 90 above is a placeholder. Check back once grades are released.**')
 
     print('Late days used: %d out of 5' % (5 - ld_remaining))
 
