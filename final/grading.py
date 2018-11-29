@@ -5,6 +5,7 @@ import getpass
 import requests
 from bs4 import BeautifulSoup
 
+
 # per-assignment breakdown weights
 weights = {
     'Assignment 1: Lambda Theory - Program': 0.55,
@@ -25,6 +26,7 @@ weights = {
 
 def proc_score(stext):
     num, denom = [float(x) for x in stext.split(' / ')]
+    print(stext, num, denom)
     return num * 100 / denom
 
 
@@ -35,7 +37,6 @@ def proc_late(ltext):
         latedays += int(dres.group(1))
     hres = re.search(r'(\d+) Hour', ltext)
     if hres:
-        # todo check if hours = 0?
         latedays += 1
     mres = re.search(r'(\d+) Minute', ltext)
     if mres and not hres:
@@ -75,7 +76,7 @@ if __name__ == '__main__':
     }
     client.post('https://www.gradescope.com/login', data=data, headers=headers)
 
-    res = client.get('https://www.gradescope.com/courses/19074')        # todo change course, check empty assns
+    res = client.get('https://www.gradescope.com/courses/19074')
 
     assignments = BeautifulSoup(res.text, 'html.parser').find(id='assignments-student-table')
 
@@ -90,15 +91,20 @@ if __name__ == '__main__':
         if 'Final' in aname: continue
 
         submission = row.find(class_='submissionStatus').find_all('div')
+
+        print(submission)
+
         latedays = 0
         if len(submission) == 2 and 'No Submission' in submission[1]:
             score = 0
-        elif len(submission) == 2:
+        elif 'Assignment 8' in aname and len(submission) == 2 and 'Submitted' in submission[1]:
             a8_graded = False
             score = 90
         else:
             score = proc_score(submission[0].text)
             latedays = proc_late(submission[1].text) if len(submission) > 1 else 0
+
+        print(aname, score, latedays)
 
         anum = int(re.search(r'\d+', aname).group(0))
 
