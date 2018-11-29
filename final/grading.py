@@ -26,7 +26,6 @@ weights = {
 
 def proc_score(stext):
     num, denom = [float(x) for x in stext.split(' / ')]
-    print(stext, num, denom)
     return num * 100 / denom
 
 
@@ -92,8 +91,6 @@ if __name__ == '__main__':
 
         submission = row.find(class_='submissionStatus').find_all('div')
 
-        print(submission)
-
         latedays = 0
         if len(submission) == 2 and 'No Submission' in submission[1]:
             score = 0
@@ -103,8 +100,6 @@ if __name__ == '__main__':
         else:
             score = proc_score(submission[0].text)
             latedays = proc_late(submission[1].text) if len(submission) > 1 else 0
-
-        print(aname, score, latedays)
 
         anum = int(re.search(r'\d+', aname).group(0))
 
