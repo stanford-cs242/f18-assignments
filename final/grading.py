@@ -90,13 +90,13 @@ if __name__ == '__main__':
         if 'Final' in aname: continue
 
         submission = row.find(class_='submissionStatus').find_all('div')
-
         latedays = 0
         if len(submission) == 2 and 'No Submission' in submission[1]:
             score = 0
-        elif 'Assignment 8' in aname and len(submission) == 2 and 'Submitted' in submission[1]:
+        elif 'Assignment 8' in aname and len(submission) > 1 and 'Submitted' in submission[1]:
             a8_graded = False
             score = 90
+            latedays = proc_late(submission[2].text) if len(submission) > 2 else 0
         else:
             score = proc_score(submission[0].text)
             latedays = proc_late(submission[1].text) if len(submission) > 1 else 0
@@ -109,9 +109,9 @@ if __name__ == '__main__':
     # handle latedays
     ld_remaining = 5
     for i, ld in enumerate(ld_used):
-        ld_remaining -= ld
-        if ld_remaining < 0:
-            grades[i] = min(grades[i], 100 + 10 * ld_remaining)
+        if ld >= ld_remaining:
+            grades[i] = min(grades[i], 100 - 10 * (ld - ld_remaining))
+        ld_remaining = max(ld_remaining - ld, 0)
 
 
     for i, g in enumerate(grades):
